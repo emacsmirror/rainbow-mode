@@ -1,10 +1,10 @@
 ;;; rainbow-mode.el --- Colorize color names in buffers
 
-;; Copyright (C) 2010-2011 Free Software Foundation, Inc
+;; Copyright (C) 2010-2012 Free Software Foundation, Inc
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.2
+;; Version: 0.3
 
 ;; This file is part of GNU Emacs.
 
@@ -42,14 +42,16 @@
 
 ;; Hexadecimal colors
 (defvar rainbow-hexadecimal-colors-font-lock-keywords
-  '(("#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}"
+  '(("[^&]\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}\\)"
+     (1 (rainbow-colorize-itself 1)))
+    ("^\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}\\)"
      (0 (rainbow-colorize-itself)))
     ("[Rr][Gg][Bb]:[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}"
      (0 (rainbow-colorize-itself)))
     ("[Rr][Gg][Bb][Ii]:[0-9.]+/[0-9.]+/[0-9.]+"
      (0 (rainbow-colorize-itself)))
-    ("\\(?:[Cc][Ii][Ee]\\(?:[Xx][Yy][Zz]\\|[Uu][Vv][Yy]\\|[Xx][Yy][Yy]\\|[Ll][Aa][Bb]\\|[Ll][Uu][Vv]\\)\\|[Tt][Ee][Kk][Hh][Vv][Cc]\\):[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?"
-     (0 (rainbow-colorize-itself))))
+    ("\\(?:[Cc][Ii][Ee]\\(?:[Xx][Yy][Zz]\\|[Uu][Vv][Yy]\\|[Xx][Yy][Yy]\\|[Ll][Aa][Bb]\\|[Ll][Uu][Vv]\\)\\|[Tt][Ee][Kk][Hh][Vv][Cc]\\):[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?/[+-]?[0-9.]+\\(?:[Ee][+-]?[0-9]+\\)?")
+    (0 (rainbow-colorize-itself)))
   "Font-lock keywords to add for hexadecimal colors.")
 
 ;; rgb() colors
@@ -280,19 +282,20 @@ will be enabled if a major mode has been detected from the
   :group 'rainbow)
 
 ;; Functions
-(defun rainbow-colorize-match (color)
+(defun rainbow-colorize-match (color &optional match)
   "Return a matched string propertized with a face whose
 background is COLOR. The foreground is computed using
 `rainbow-color-luminance', and is either white or black."
-  (put-text-property
-   (match-beginning 0) (match-end 0)
-   'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                             "white" "black"))
-           (:background ,color))))
+  (let ((match (or match 0)))
+    (put-text-property
+     (match-beginning match) (match-end match)
+     'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
+                               "white" "black"))
+             (:background ,color)))))
 
-(defun rainbow-colorize-itself ()
+(defun rainbow-colorize-itself (&optional match)
   "Colorize a match with itself."
-  (rainbow-colorize-match (match-string-no-properties 0)))
+  (rainbow-colorize-match (match-string-no-properties (or match 0)) match))
 
 (defun rainbow-colorize-hexadecimal-without-sharp ()
   "Colorize an hexadecimal colors and prepend # to it."
