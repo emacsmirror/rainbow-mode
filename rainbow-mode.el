@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.3
+;; Version: 0.4
 
 ;; This file is part of GNU Emacs.
 
@@ -34,6 +34,7 @@
 
 (require 'regexp-opt)
 (require 'faces)
+(require 'color)
 
 (defgroup rainbow nil
   "Show color strings with a background color."
@@ -315,26 +316,6 @@ This will convert \"80 %\" to 204, \"100 %\" to 255 but \"123\" to \"123\"."
         (/ (* (string-to-number (substring number 0 string-length)) 255) 100)
       (string-to-number number))))
 
-(defun rainbow-hue-to-rgb (x y h)
-  "Convert X Y H to RGB value."
-  (when (< h 0) (incf h))
-  (when (> h 1) (decf h))
-  (cond ((< h (/ 1 6.0)) (+ x (* (- y x) h 6)))
-        ((< h 0.5) y)
-        ((< h (/ 2.0 3.0)) (+ x (* (- y x) (- (/ 2.0 3.0) h) 6)))
-        (t x)))
-
-(defun rainbow-hsl-to-rgb-fractions (h s l)
-  "Convert H S L to fractional RGB values."
-  (let (m1 m2)
-    (if (<= l 0.5)
-        (setq m2 (* l (+ s 1)))
-        (setq m2 (- (+ l s) (* l s))))
-    (setq m1 (- (* l 2) m2))
-    (list (rainbow-hue-to-rgb m1 m2 (+ h (/ 1 3.0)))
-	  (rainbow-hue-to-rgb m1 m2 h)
-	  (rainbow-hue-to-rgb m1 m2 (- h (/ 1 3.0))))))
-
 (defun rainbow-colorize-hsl ()
   "Colorize a match with itself."
   (let ((h (/ (string-to-number (match-string-no-properties 1)) 360.0))
@@ -342,7 +323,7 @@ This will convert \"80 %\" to 204, \"100 %\" to 255 but \"123\" to \"123\"."
         (l (/ (string-to-number (match-string-no-properties 3)) 100.0)))
     (rainbow-colorize-match
      (multiple-value-bind (r g b)
-	 (rainbow-hsl-to-rgb-fractions h s l)
+	 (color-hsl-to-rgb h s l)
        (format "#%02X%02X%02X" (* r 255) (* g 255) (* b 255))))))
 
 (defun rainbow-colorize-rgb ()
