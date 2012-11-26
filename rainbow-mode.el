@@ -266,18 +266,18 @@ will be enabled if a major mode has been detected from the
      (0 (rainbow-colorize-rgb)))
     ("{HTML}{\\([0-9A-Fa-f]\\{6\\}\\)}"
      (0 (rainbow-colorize-hexadecimal-without-sharp))))
-  "Font-lock keywords to add for X colors.")
+  "Font-lock keywords to add for LaTeX colors.")
 
 (defcustom rainbow-latex-colors-major-mode-list
   '(latex-mode)
-  "List of major mode where X colors are enabled when
+  "List of major mode where LaTeX colors are enabled when
 `rainbow-x-colors' is set to auto."
   :group 'rainbow)
 
 (defcustom rainbow-latex-colors 'auto
   "When to enable LaTeX colors.
 If set to t, the LaTeX colors will be enabled. If set to nil, the
-X colors will not be enabled.  If set to auto, the LaTeX colors
+LaTeX colors will not be enabled.  If set to auto, the LaTeX colors
 will be enabled if a major mode has been detected from the
 `rainbow-latex-colors-major-mode-list'."
   :group 'rainbow)
