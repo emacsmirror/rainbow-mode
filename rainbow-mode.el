@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.5
+;; Version: 0.6
 
 ;; This file is part of GNU Emacs.
 
@@ -35,6 +35,9 @@
 (require 'regexp-opt)
 (require 'faces)
 (require 'color)
+
+(unless (require 'xterm-color nil t)
+  (require 'ansi-color))
 
 (defgroup rainbow nil
   "Show color strings with a background color."
@@ -282,6 +285,26 @@ will be enabled if a major mode has been detected from the
 `rainbow-latex-colors-major-mode-list'."
   :group 'rainbow)
 
+;; Shell colors
+(defvar rainbow-ansi-colors-font-lock-keywords
+  '(("\\(\\\\[eE]\\|\\\\033\\|\\\\x1[bB]\\|\033\\)\\[\\([0-9;]*m\\)"
+     (0 (rainbow-colorize-ansi))))
+  "Font-lock keywords to add for ANSI colors.")
+
+(defcustom rainbow-ansi-colors-major-mode-list
+  '(sh-mode c-mode c++-mode)
+  "List of major mode where ANSI colors are enabled when
+`rainbow-ansi-colors' is set to auto."
+  :group 'rainbow)
+
+(defcustom rainbow-ansi-colors 'auto
+  "When to enable ANSI colors.
+If set to t, the ANSI colors will be enabled. If set to nil, the
+ANSI colors will not be enabled.  If set to auto, the ANSI colors
+will be enabled if a major mode has been detected from the
+`rainbow-ansi-colors-major-mode-list'."
+  :group 'rainbow)
+
 ;; Functions
 (defun rainbow-colorize-match (color &optional match)
   "Return a matched string propertized with a face whose
@@ -340,6 +363,40 @@ This will convert \"80 %\" to 204, \"100 %\" to 255 but \"123\" to \"123\"."
         (b (* (string-to-number (match-string-no-properties 3)) 255.0)))
     (rainbow-colorize-match (format "#%02X%02X%02X" r g b))))
 
+(defun rainbow-colorize-ansi ()
+  "Return a matched string propertized with ansi color face."
+  (let ((xterm-color? (featurep 'xterm-color))
+        (string (match-string-no-properties 0))
+        color)
+    (save-match-data
+      (let* ((replaced (concat
+                        (replace-regexp-in-string
+                         "^\\(\\\\[eE]\\|\\\\033\\|\\\\x1[bB]\\)"
+                         "\033" string) "x"))
+             xterm-color-current
+             ansi-color-context
+             (applied (funcall (if xterm-color?
+                                   'xterm-color-filter
+                                 'ansi-color-apply)
+                               replaced))
+             (face-property (get-text-property
+                             0
+                             (if xterm-color? 'face 'font-lock-face)
+                             applied)))
+        (unless (listp (car face-property))
+          (setq face-property (list face-property)))
+        (setq color (funcall (if xterm-color? 'cadr 'cdr)
+                             (or (assq (if xterm-color?
+                                           :foreground
+                                         'foreground-color)
+                                       face-property)
+                                 (assq (if xterm-color?
+                                           :background
+                                         'background-color)
+                                       face-property))))))
+    (when color
+      (rainbow-colorize-match color))))
+
 (defun rainbow-color-luminance (red green blue)
   "Calculate the luminance of color composed of RED, BLUE and GREEN.
 Return a value between 0 and 1."
@@ -370,6 +427,12 @@ Return a value between 0 and 1."
                  (memq major-mode rainbow-latex-colors-major-mode-list)))
     (font-lock-add-keywords nil
                             rainbow-latex-rgb-colors-font-lock-keywords))
+  ;; Activate ANSI colors?
+  (when (or (eq rainbow-ansi-colors t)
+            (and (eq rainbow-ansi-colors 'auto)
+                 (memq major-mode rainbow-ansi-colors-major-mode-list)))
+    (font-lock-add-keywords nil
+                            rainbow-ansi-colors-font-lock-keywords))
   ;; Activate HTML colors?
   (when (or (eq rainbow-html-colors t)
             (and (eq rainbow-html-colors 'auto)
