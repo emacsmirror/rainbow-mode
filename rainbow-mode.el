@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.6
+;; Version: 0.7
 
 ;; This file is part of GNU Emacs.
 
@@ -462,9 +462,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\"."
   (progn
     (if rainbow-mode
         (rainbow-turn-on)
-      (rainbow-turn-off))
-    ;; Turn on font lock
-    (font-lock-mode 1)))
+      (rainbow-turn-off))))
 
 (provide 'rainbow-mode)
 
