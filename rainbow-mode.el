@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.8
+;; Version: 0.9
 
 ;; This file is part of GNU Emacs.
 
@@ -263,9 +263,9 @@ will be enabled if a major mode has been detected from the
 
 ;; LaTeX colors
 (defvar rainbow-latex-rgb-colors-font-lock-keywords
-  '(("{rgb}{\\([0-9.]+\\),\\([0-9.]+\\),\\([0-9.]+\\)}"
+  '(("{rgb}{\\([0-9.]+\\),\s*\\([0-9.]+\\),\s*\\([0-9.]+\\)}"
      (0 (rainbow-colorize-rgb-float)))
-    ("{RGB}{\\([0-9]\\{1,3\\}\\),\\([0-9]\\{1,3\\}\\),\\([0-9]\\{1,3\\}\\)}"
+    ("{RGB}{\\([0-9]\\{1,3\\}\\),\s*\\([0-9]\\{1,3\\}\\),\s*\\([0-9]\\{1,3\\}\\)}"
      (0 (rainbow-colorize-rgb)))
     ("{HTML}{\\([0-9A-Fa-f]\\{6\\}\\)}"
      (0 (rainbow-colorize-hexadecimal-without-sharp))))
