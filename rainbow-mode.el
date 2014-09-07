@@ -1,10 +1,10 @@
 ;;; rainbow-mode.el --- Colorize color names in buffers
 
-;; Copyright (C) 2010-2012 Free Software Foundation, Inc
+;; Copyright (C) 2010-2014 Free Software Foundation, Inc
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.9
+;; Version: 0.10
 
 ;; This file is part of GNU Emacs.
 
@@ -60,9 +60,9 @@
 
 ;; rgb() colors
 (defvar rainbow-html-rgb-colors-font-lock-keywords
-  '(("rgb(\s*\\([0-9]\\{1,3\\}\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\s*%\\)?\\)\s*)"
+  '(("rgb(\s*\\([0-9]\\{1,3\\}\\(?:\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*)"
      (0 (rainbow-colorize-rgb)))
-    ("rgba(\s*\\([0-9]\\{1,3\\}\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\s*%\\)?\\)\s*,\s*[0-9]*\.?[0-9]+\s*%?\s*)"
+    ("rgba(\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*[0-9]*\.?[0-9]+\s*%?\s*)"
      (0 (rainbow-colorize-rgb)))
     ("hsl(\s*\\([0-9]\\{1,3\\}\\)\s*,\s*\\([0-9]\\{1,3\\}\\)\s*%\s*,\s*\\([0-9]\\{1,3\\}\\)\s*%\s*)"
      (0 (rainbow-colorize-hsl)))
@@ -1018,11 +1018,12 @@ background is COLOR. The foreground is computed using
 
 (defun rainbow-rgb-relative-to-absolute (number)
   "Convert a relative NUMBER to absolute. If NUMBER is absolute, return NUMBER.
-This will convert \"80 %\" to 204, \"100 %\" to 255 but \"123\" to \"123\"."
+This will convert \"80 %\" to 204, \"100 %\" to 255 but \"123\" to \"123\".
+If the percentage value is above 100, it's converted to 100."
   (let ((string-length (- (length number) 1)))
     ;; Is this a number with %?
     (if (eq (elt number string-length) ?%)
-        (/ (* (string-to-number (substring number 0 string-length)) 255) 100)
+        (/ (* (min (string-to-number (substring number 0 string-length)) 100) 255) 100)
       (string-to-number number))))
 
 (defun rainbow-colorize-hsl ()
