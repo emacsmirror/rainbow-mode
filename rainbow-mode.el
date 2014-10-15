@@ -1050,6 +1050,9 @@ If the percentage value is above 100, it's converted to 100."
         (b (* (string-to-number (match-string-no-properties 3)) 255.0)))
     (rainbow-colorize-match (format "#%02X%02X%02X" r g b))))
 
+(defvar ansi-color-context)
+(defvar xterm-color-current)
+
 (defun rainbow-colorize-ansi ()
   "Return a matched string propertized with ansi color face."
   (let ((xterm-color? (featurep 'xterm-color))
