@@ -1,10 +1,10 @@
 ;;; rainbow-mode.el --- Colorize color names in buffers
 
-;; Copyright (C) 2010-2014 Free Software Foundation, Inc
+;; Copyright (C) 2010-2015 Free Software Foundation, Inc
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.10
+;; Version: 0.11
 
 ;; This file is part of GNU Emacs.
 
@@ -1163,7 +1163,9 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\"."
   (progn
     (if rainbow-mode
         (rainbow-turn-on)
-      (rainbow-turn-off))))
+      (rainbow-turn-off))
+    ;; Call font-lock-mode to refresh the buffer when used e.g. interactively
+    (font-lock-mode 1)))
 
 (provide 'rainbow-mode)
 
