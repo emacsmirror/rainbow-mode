@@ -1033,7 +1033,7 @@ If the percentage value is above 100, it's converted to 100."
         (l (/ (string-to-number (match-string-no-properties 3)) 100.0)))
     (rainbow-colorize-match
      (multiple-value-bind (r g b)
-	 (color-hsl-to-rgb h s l)
+         (color-hsl-to-rgb h s l)
        (format "#%02X%02X%02X" (* r 255) (* g 255) (* b 255))))))
 
 (defun rainbow-colorize-rgb ()
@@ -1096,9 +1096,9 @@ Return a value between 0 and 1."
   "Calculate the luminance of a color string (e.g. \"#ffaa00\", \"blue\").
 Return a value between 0 and 1."
   (let* ((values (x-color-values color))
-	 (r (/ (car values) 256.0))
+         (r (/ (car values) 256.0))
          (g (/ (cadr values) 256.0))
-	 (b (/ (caddr values) 256.0)))
+         (b (/ (caddr values) 256.0)))
     (rainbow-color-luminance r g b)))
 
 (defun rainbow-turn-on ()
@@ -1174,4 +1174,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\"."
 
 (provide 'rainbow-mode)
 
+;; Local Variables:
+;; indent-tabs-mode: nil
+;; End:
 ;;; rainbow-mode.el ends here
