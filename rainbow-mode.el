@@ -225,12 +225,14 @@
     ("YellowGreen" . "#9ACD32"))
   "Alist of HTML colors.
 Each entry should have the form (COLOR-NAME . HEXADECIMAL-COLOR)."
+  :type 'alist
   :group 'rainbow)
 
 (defcustom rainbow-html-colors-major-mode-list
   '(html-mode css-mode php-mode nxml-mode xml-mode)
   "List of major mode where HTML colors are enabled when
 `rainbow-html-colors' is set to auto."
+  :type '(repeat (symbol :tag "Major-Mode"))
   :group 'rainbow)
 
 (defcustom rainbow-html-colors 'auto
@@ -239,6 +241,9 @@ If set to t, the HTML colors will be enabled.  If set to nil, the
 HTML colors will not be enabled.  If set to auto, the HTML colors
 will be enabled if a major mode has been detected from the
 `rainbow-html-colors-major-mode-list'."
+  :type '(choice (symbol :tag "enable in certain modes" auto)
+                 (symbol :tag "enable globally" t)
+                 (symbol :tag "disable" nil))
   :group 'rainbow)
 
 ;; X colors
@@ -251,6 +256,7 @@ will be enabled if a major mode has been detected from the
   '(emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode)
   "List of major mode where X colors are enabled when
 `rainbow-x-colors' is set to auto."
+  :type '(repeat (symbol :tag "Major-Mode"))
   :group 'rainbow)
 
 (defcustom rainbow-x-colors 'auto
@@ -259,6 +265,9 @@ If set to t, the X colors will be enabled.  If set to nil, the
 X colors will not be enabled.  If set to auto, the X colors
 will be enabled if a major mode has been detected from the
 `rainbow-x-colors-major-mode-list'."
+  :type '(choice (symbol :tag "enable in certain modes" auto)
+                 (symbol :tag "enable globally" t)
+                 (symbol :tag "disable" nil))
   :group 'rainbow)
 
 ;; LaTeX colors
@@ -275,6 +284,7 @@ will be enabled if a major mode has been detected from the
   '(latex-mode)
   "List of major mode where LaTeX colors are enabled when
 `rainbow-x-colors' is set to auto."
+  :type '(repeat (symbol :tag "Major-Mode"))
   :group 'rainbow)
 
 (defcustom rainbow-latex-colors 'auto
@@ -283,6 +293,9 @@ If set to t, the LaTeX colors will be enabled. If set to nil, the
 LaTeX colors will not be enabled.  If set to auto, the LaTeX colors
 will be enabled if a major mode has been detected from the
 `rainbow-latex-colors-major-mode-list'."
+  :type '(choice (symbol :tag "enable in certain modes" auto)
+                 (symbol :tag "enable globally" t)
+                 (symbol :tag "disable" nil))
   :group 'rainbow)
 
 ;; Shell colors
@@ -295,6 +308,7 @@ will be enabled if a major mode has been detected from the
   '(sh-mode c-mode c++-mode)
   "List of major mode where ANSI colors are enabled when
 `rainbow-ansi-colors' is set to auto."
+  :type '(repeat (symbol :tag "Major-Mode"))
   :group 'rainbow)
 
 (defcustom rainbow-ansi-colors 'auto
@@ -303,6 +317,9 @@ If set to t, the ANSI colors will be enabled. If set to nil, the
 ANSI colors will not be enabled.  If set to auto, the ANSI colors
 will be enabled if a major mode has been detected from the
 `rainbow-ansi-colors-major-mode-list'."
+  :type '(choice (symbol :tag "enable in certain modes" auto)
+                 (symbol :tag "enable globally" t)
+                 (symbol :tag "disable" nil))
   :group 'rainbow)
 
 ;; R colors
@@ -975,11 +992,14 @@ will be enabled if a major mode has been detected from the
     ("yellowgreen" . "#9ACD32"))
   "Alist of R colors.
 Each entry should have the form (COLOR-NAME . HEXADECIMAL-COLOR)."
+  :type 'alist
   :group 'rainbow)
+
 (defcustom rainbow-r-colors-major-mode-list
   '(ess-mode)
   "List of major mode where R colors are enabled when
 `rainbow-r-colors' is set to auto."
+  :type '(repeat (symbol :tag "Major-Mode"))
   :group 'rainbow)
 
 (defcustom rainbow-r-colors 'auto
@@ -988,8 +1008,10 @@ If set to t, the R colors will be enabled.  If set to nil, the
 R colors will not be enabled.  If set to auto, the R colors
 will be enabled if a major mode has been detected from the
 `rainbow-r-colors-major-mode-list'."
+  :type '(choice (symbol :tag "enable in certain modes" auto)
+                 (symbol :tag "enable globally" t)
+                 (symbol :tag "disable" nil))
   :group 'rainbow)
-
 
 ;; Functions
 (defun rainbow-colorize-match (color &optional match)
