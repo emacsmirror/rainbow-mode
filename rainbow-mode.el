@@ -44,7 +44,8 @@
   :tag "Rainbow"
   :group 'help)
 
-;; Hexadecimal colors
+;;; Hexadecimal colors
+
 (defvar rainbow-hexadecimal-colors-font-lock-keywords
   '(("[^&]\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}\\)"
      (1 (rainbow-colorize-itself 1)))
@@ -58,7 +59,8 @@
      (0 (rainbow-colorize-itself))))
   "Font-lock keywords to add for hexadecimal colors.")
 
-;; rgb() colors
+;;; rgb() colors
+
 (defvar rainbow-html-rgb-colors-font-lock-keywords
   '(("rgb(\s*\\([0-9]\\{1,3\\}\\(?:\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*,\s*\\([0-9]\\{1,3\\}\\(?:\\.[0-9]\\)?\\(?:\s*%\\)?\\)\s*)"
      (0 (rainbow-colorize-rgb)))
@@ -70,7 +72,8 @@
      (0 (rainbow-colorize-hsl))))
   "Font-lock keywords to add for RGB colors.")
 
-;; HTML colors name
+;;; HTML colors
+
 (defvar rainbow-html-colors-font-lock-keywords nil
   "Font-lock keywords to add for HTML colors.")
 (make-variable-buffer-local 'rainbow-html-colors-font-lock-keywords)
@@ -246,7 +249,8 @@ will be enabled if a major mode has been detected from the
                  (symbol :tag "disable" nil))
   :group 'rainbow)
 
-;; X colors
+;;; X colors
+
 (defvar rainbow-x-colors-font-lock-keywords
   `((,(regexp-opt (x-defined-colors) 'words)
      (0 (rainbow-colorize-itself))))
@@ -270,7 +274,8 @@ will be enabled if a major mode has been detected from the
                  (symbol :tag "disable" nil))
   :group 'rainbow)
 
-;; LaTeX colors
+;;; LaTeX colors
+
 (defvar rainbow-latex-rgb-colors-font-lock-keywords
   '(("{rgb}{\\([0-9.]+\\),\s*\\([0-9.]+\\),\s*\\([0-9.]+\\)}"
      (0 (rainbow-colorize-rgb-float)))
@@ -298,7 +303,8 @@ will be enabled if a major mode has been detected from the
                  (symbol :tag "disable" nil))
   :group 'rainbow)
 
-;; Shell colors
+;;; Shell colors
+
 (defvar rainbow-ansi-colors-font-lock-keywords
   '(("\\(\\\\[eE]\\|\\\\033\\|\\\\x1[bB]\\|\033\\)\\[\\([0-9;]*m\\)"
      (0 (rainbow-colorize-ansi))))
@@ -322,9 +328,8 @@ will be enabled if a major mode has been detected from the
                  (symbol :tag "disable" nil))
   :group 'rainbow)
 
-;; R colors
+;;; R colors
 
-;; R colors name
 (defvar rainbow-r-colors-font-lock-keywords nil
   "Font-lock keywords to add for R colors.")
 (make-variable-buffer-local 'rainbow-r-colors-font-lock-keywords)
@@ -1013,7 +1018,8 @@ will be enabled if a major mode has been detected from the
                  (symbol :tag "disable" nil))
   :group 'rainbow)
 
-;; Functions
+;;; Functions
+
 (defun rainbow-colorize-match (color &optional match)
   "Return a matched string propertized with a face whose
 background is COLOR. The foreground is computed using
@@ -1122,6 +1128,8 @@ Return a value between 0 and 1."
          (g (/ (cadr values) 256.0))
          (b (/ (caddr values) 256.0)))
     (rainbow-color-luminance r g b)))
+
+;;; Mode
 
 (defun rainbow-turn-on ()
   "Turn on raibow-mode."
