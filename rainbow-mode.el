@@ -1,10 +1,10 @@
 ;;; rainbow-mode.el --- Colorize color names in buffers
 
-;; Copyright (C) 2010-2017 Free Software Foundation, Inc
+;; Copyright (C) 2010-2018 Free Software Foundation, Inc
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 0.13
+;; Version: 1.0
 
 ;; This file is part of GNU Emacs.
 
