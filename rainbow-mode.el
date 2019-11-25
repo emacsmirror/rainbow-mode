@@ -1116,12 +1116,12 @@ If the percentage value is above 100, it's converted to 100."
       (rainbow-colorize-match color))))
 
 (defun rainbow-color-luminance (red green blue)
-  "Calculate the luminance of color composed of RED, GREEN and BLUE.
+  "Calculate the relative luminance of color composed of RED, GREEN and BLUE.
 Return a value between 0 and 1."
-  (/ (+ (* .2126 red) (* .7152 green) (* .0722 blue)) 256))
+  (/ (+ (* .2126 red) (* .7152 green) (* .0722 blue)) 255))
 
 (defun rainbow-x-color-luminance (color)
-  "Calculate the luminance of a color string (e.g. \"#ffaa00\", \"blue\").
+  "Calculate the relative luminance of a color string (e.g. \"#ffaa00\", \"blue\").
 Return a value between 0 and 1."
   (let* ((values (x-color-values color))
          (r (/ (car values) 256.0))
