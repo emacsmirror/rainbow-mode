@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 1.0.3
+;; Version: 1.0.4
 
 ;; This file is part of GNU Emacs.
 
@@ -1130,7 +1130,7 @@ Return a value between 0 and 1."
 ;;; Mode
 
 (defun rainbow-turn-on ()
-  "Turn on raibow-mode."
+  "Turn on rainbow-mode."
   (font-lock-add-keywords nil
                           rainbow-hexadecimal-colors-font-lock-keywords
                           t)
