@@ -1,10 +1,10 @@
 ;;; rainbow-mode.el --- Colorize color names in buffers
 
-;; Copyright (C) 2010-2019 Free Software Foundation, Inc
+;; Copyright (C) 2010-2020 Free Software Foundation, Inc
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 1.0.4
+;; Version: 1.0.5
 
 ;; This file is part of GNU Emacs.
 
@@ -45,9 +45,9 @@
 ;;; Hexadecimal colors
 
 (defvar rainbow-hexadecimal-colors-font-lock-keywords
-  '(("[^&]\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}\\)"
+  '(("[^&]\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)\\{1,4\\}\\)"
      (1 (rainbow-colorize-itself 1)))
-    ("^\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)+\\{1,4\\}\\)"
+    ("^\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)\\{1,4\\}\\)"
      (0 (rainbow-colorize-itself)))
     ("[Rr][Gg][Bb]:[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}"
      (0 (rainbow-colorize-itself)))
