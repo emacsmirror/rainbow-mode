@@ -4,7 +4,7 @@
 
 ;; Author: Julien Danjou <julien@danjou.info>
 ;; Keywords: faces
-;; Version: 1.0.5
+;; Version: 1.0.6
 
 ;; This file is part of GNU Emacs.
 
@@ -45,9 +45,9 @@
 ;;; Hexadecimal colors
 
 (defvar rainbow-hexadecimal-colors-font-lock-keywords
-  '(("[^&]\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)\\{1,4\\}\\)"
+  '(("[^&]\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)\\{1,4\\}\\)\\b"
      (1 (rainbow-colorize-itself 1)))
-    ("^\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)\\{1,4\\}\\)"
+    ("^\\(#\\(?:[0-9a-fA-F]\\{3\\}\\)\\{1,4\\}\\)\\b"
      (0 (rainbow-colorize-itself)))
     ("[Rr][Gg][Bb]:[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}/[0-9a-fA-F]\\{1,4\\}"
      (0 (rainbow-colorize-itself)))
